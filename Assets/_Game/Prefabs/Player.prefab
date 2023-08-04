@@ -66,6 +66,7 @@ MonoBehaviour:
   _moveSpeed: 12
   _turnSpeed: 3
   _player: {fileID: 8615192670054320473}
+  _shield: {fileID: 2517250780093502057, guid: f1bef2679f9a63a4293f8f2068597f9d, type: 3}
 --- !u!1001 &4914064261837680951
 PrefabInstance:
   m_ObjectHideFlags: 0

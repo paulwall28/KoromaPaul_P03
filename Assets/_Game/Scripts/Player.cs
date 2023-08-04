@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     Rigidbody _rb = null;
 
     public GameObject _player;
-
+    public GameObject _shield;
 
     private void Awake()
     {
