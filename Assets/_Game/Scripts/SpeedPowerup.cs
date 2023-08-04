@@ -1,31 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(AudioSource))]
-public class InvisibilityPowerup : MonoBehaviour
+public class SpeedPowerup : MonoBehaviour
 {
     [SerializeField]
-    private float _powerupDuration = 13;
-
+    private float _speedIncreaseAmount = 20;
     [SerializeField]
-    private GameObject _player;
+    private float _powerupDuration = 6;
 
     [SerializeField]
     private GameObject _artToDisable = null;
 
-    [SerializeField] AudioClip _InvisPowerupSFX = null;
+    [SerializeField] AudioClip _speedPowerupSFX = null;
 
     [SerializeField]
-    private ParticleSystem _InvisParticlePrefab = null;
-
+    private ParticleSystem _collectParticlePrefab = null;
 
     private Collider _collider;
     AudioSource _audioSource = null;
-
 
     private void Awake()
     {
@@ -55,38 +50,31 @@ public class InvisibilityPowerup : MonoBehaviour
         yield return new WaitForSeconds(_powerupDuration);
         DeactivePowerup(player);
 
-
-
         // reenable if desired
         Destroy(gameObject);
     }
 
     private void ActivatePowerup(Player player)
     {
-        player.ActivateInvis(_player);
-        _player.SetActive(false);
-
-
-        if (_InvisParticlePrefab != null)
+        player.SetMoveSpeed(_speedIncreaseAmount);
+        if (_collectParticlePrefab != null)
         {
-            Instantiate(_InvisParticlePrefab,
+            Instantiate(_collectParticlePrefab,
                 transform.position, transform.rotation);
         }
-
     }
 
     private void DeactivePowerup(Player player)
     {
-        player.DeActivateInvis(_player);
-        _player.SetActive(true);
-
+        player.SetMoveSpeed(-_speedIncreaseAmount);
     }
 
     void playSFX()
     {
-        if (_audioSource != null && _InvisPowerupSFX != null)
+        // play sfx
+        if (_audioSource != null && _speedPowerupSFX != null)
         {
-            _audioSource.PlayOneShot(_InvisPowerupSFX, _audioSource.volume);
+            _audioSource.PlayOneShot(_speedPowerupSFX, _audioSource.volume);
         }
     }
 }

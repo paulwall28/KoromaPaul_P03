@@ -3,25 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(AudioSource))]
-public class InvisibilityPowerup : MonoBehaviour
+public class ShieldPowerup : MonoBehaviour
 {
-    [SerializeField]
-    private float _powerupDuration = 13;
+    public GameObject _shield;
 
     [SerializeField]
-    private GameObject _player;
+    private float _powerupDuration = 20;
 
     [SerializeField]
     private GameObject _artToDisable = null;
 
-    [SerializeField] AudioClip _InvisPowerupSFX = null;
+    [SerializeField] AudioClip _shieldPowerupSFX = null;
 
     [SerializeField]
-    private ParticleSystem _InvisParticlePrefab = null;
-
+    private ParticleSystem _shieldParticlePrefab = null;
 
     private Collider _collider;
     AudioSource _audioSource = null;
@@ -63,30 +60,32 @@ public class InvisibilityPowerup : MonoBehaviour
 
     private void ActivatePowerup(Player player)
     {
-        player.ActivateInvis(_player);
-        _player.SetActive(false);
 
+        player.SetShield(_shield);
+        _shield.SetActive(true);
 
-        if (_InvisParticlePrefab != null)
+        if (_shieldParticlePrefab != null)
         {
-            Instantiate(_InvisParticlePrefab,
+            Instantiate(_shieldParticlePrefab,
                 transform.position, transform.rotation);
         }
-
     }
 
     private void DeactivePowerup(Player player)
     {
-        player.DeActivateInvis(_player);
-        _player.SetActive(true);
-
+        player.DeActivateShield(_shield);
+        _shield.SetActive(false);
     }
 
     void playSFX()
     {
-        if (_audioSource != null && _InvisPowerupSFX != null)
+        if (_audioSource != null && _shieldPowerupSFX != null)
         {
-            _audioSource.PlayOneShot(_InvisPowerupSFX, _audioSource.volume);
+            _audioSource.PlayOneShot(_shieldPowerupSFX, _audioSource.volume);
         }
     }
 }
+
+
+
+

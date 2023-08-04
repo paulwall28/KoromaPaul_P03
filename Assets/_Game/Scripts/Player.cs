@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
     Rigidbody _rb = null;
 
     public GameObject _player;
+
 
     private void Awake()
     {
@@ -51,5 +53,33 @@ public class Player : MonoBehaviour
     public void DeActivateInvis(GameObject _player)
     {
         _player.SetActive(true);
+    }
+
+    public void SetMoveSpeed(float newSpeedAdjustment)
+    {
+        _moveSpeed = newSpeedAdjustment;
+        // speed flash
+    }
+
+    public void SetShield(GameObject _shield)
+    {
+        _shield.SetActive(true);
+
+    }
+
+    public void DeActivateShield(GameObject _shield)
+    {
+        _shield.SetActive(false);
+    }
+
+    public void ScaleGrowth(GameObject _player)
+    {
+        _player.transform.localScale = new Vector2(4f, 4f);
+
+    }
+
+    public void ScaleShrink(GameObject _player)
+    {
+        _player.transform.localScale = new Vector2(1f, 1f);
     }
 }

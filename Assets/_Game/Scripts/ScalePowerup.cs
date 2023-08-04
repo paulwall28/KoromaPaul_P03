@@ -1,31 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(AudioSource))]
-public class InvisibilityPowerup : MonoBehaviour
+public class ScalePowerup : MonoBehaviour
 {
     [SerializeField]
-    private float _powerupDuration = 13;
+    private float _speedIncreaseAmount = 15;
+    [SerializeField]
+    private float _powerupDuration = 12;
 
     [SerializeField]
-    private GameObject _player;
+    public GameObject _player;
 
     [SerializeField]
     private GameObject _artToDisable = null;
 
-    [SerializeField] AudioClip _InvisPowerupSFX = null;
+    [SerializeField] AudioClip _scalePowerupSFX = null;
 
     [SerializeField]
-    private ParticleSystem _InvisParticlePrefab = null;
-
+    private ParticleSystem _scaleParticlePrefab = null;
 
     private Collider _collider;
     AudioSource _audioSource = null;
-
 
     private void Awake()
     {
@@ -63,13 +61,12 @@ public class InvisibilityPowerup : MonoBehaviour
 
     private void ActivatePowerup(Player player)
     {
-        player.ActivateInvis(_player);
-        _player.SetActive(false);
+        _player.transform.localScale = new Vector2(4f, 4f);
+        player.ScaleGrowth(_player);
 
-
-        if (_InvisParticlePrefab != null)
+        if (_scaleParticlePrefab != null)
         {
-            Instantiate(_InvisParticlePrefab,
+            Instantiate(_scaleParticlePrefab,
                 transform.position, transform.rotation);
         }
 
@@ -77,16 +74,15 @@ public class InvisibilityPowerup : MonoBehaviour
 
     private void DeactivePowerup(Player player)
     {
-        player.DeActivateInvis(_player);
-        _player.SetActive(true);
-
+        _player.transform.localScale = new Vector2(1f, 1f);
+        player.ScaleShrink(_player);
     }
 
     void playSFX()
     {
-        if (_audioSource != null && _InvisPowerupSFX != null)
+        if (_audioSource != null && _scalePowerupSFX != null)
         {
-            _audioSource.PlayOneShot(_InvisPowerupSFX, _audioSource.volume);
+            _audioSource.PlayOneShot(_scalePowerupSFX, _audioSource.volume);
         }
     }
 }
